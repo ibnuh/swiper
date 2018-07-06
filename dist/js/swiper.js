@@ -7583,14 +7583,12 @@
         var slideSize = slidesSizesGrid[i];
         var slideOffset = $slideEl[0].swiperSlideOffset;
         var offsetMultiplier = ((center - slideOffset - (slideSize / 2)) / slideSize) * params.modifier;
-
-        var rotateY = isHorizontal ? rotate * offsetMultiplier : 0;
-        var rotateX = isHorizontal ? 0 : rotate * offsetMultiplier;
+        var rotateY = 0;
+        var rotateX = 0;
         // var rotateZ = 0
-        var translateZ = -translate * Math.abs(offsetMultiplier);
-
-        var translateY = isHorizontal ? 0 : params.stretch * (offsetMultiplier);
-        var translateX = isHorizontal ? params.stretch * (offsetMultiplier) : 0;
+        var translateZ = -240 * Math.abs(offsetMultiplier);
+        var translateY = isHorizontal ? 5 * Math.abs(offsetMultiplier): 0;
+        var translateX = isHorizontal ? 100 * (offsetMultiplier) : 0;
 
         // Fix for ultra small values
         if (Math.abs(translateX) < 0.001) { translateX = 0; }
@@ -7598,26 +7596,11 @@
         if (Math.abs(translateZ) < 0.001) { translateZ = 0; }
         if (Math.abs(rotateY) < 0.001) { rotateY = 0; }
         if (Math.abs(rotateX) < 0.001) { rotateX = 0; }
-
         var slideTransform = "translate3d(" + translateX + "px," + translateY + "px," + translateZ + "px)  rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg)";
+        // var slideTransform = `translate3d(143px, 0px, -200px) rotateX(0deg) rotateY(0deg)`;
 
         $slideEl.transform(slideTransform);
         $slideEl[0].style.zIndex = -Math.abs(Math.round(offsetMultiplier)) + 1;
-        if (params.slideShadows) {
-          // Set shadows
-          var $shadowBeforeEl = isHorizontal ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
-          var $shadowAfterEl = isHorizontal ? $slideEl.find('.swiper-slide-shadow-right') : $slideEl.find('.swiper-slide-shadow-bottom');
-          if ($shadowBeforeEl.length === 0) {
-            $shadowBeforeEl = $(("<div class=\"swiper-slide-shadow-" + (isHorizontal ? 'left' : 'top') + "\"></div>"));
-            $slideEl.append($shadowBeforeEl);
-          }
-          if ($shadowAfterEl.length === 0) {
-            $shadowAfterEl = $(("<div class=\"swiper-slide-shadow-" + (isHorizontal ? 'right' : 'bottom') + "\"></div>"));
-            $slideEl.append($shadowAfterEl);
-          }
-          if ($shadowBeforeEl.length) { $shadowBeforeEl[0].style.opacity = offsetMultiplier > 0 ? offsetMultiplier : 0; }
-          if ($shadowAfterEl.length) { $shadowAfterEl[0].style.opacity = (-offsetMultiplier) > 0 ? -offsetMultiplier : 0; }
-        }
       }
 
       // Set correct perspective for IE10
@@ -7641,7 +7624,7 @@
       coverflowEffect: {
         rotate: 50,
         stretch: 0,
-        depth: 100,
+        depth: 200,
         modifier: 1,
         slideShadows: true,
       },
